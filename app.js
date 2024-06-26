@@ -1,27 +1,31 @@
 // yakir shriki 318005089
 // kobi hazut 207496175
 // asaf tzabari 318946977
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const bodyParser = require('body-parser');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var addcaloriesRouter = require('./routes/addcalories');
-var reportRouter=require('./routes/report');
-var aboutRouter = require('./routes/about');
-const mongoose=require('mongoose');
-var Calories = require('./models/calories');
-var User = require('./models/users');
 
-var app = express();
-app.use(bodyParser.json());
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const addCaloriesRouter = require('./routes/addcalories');
+const reportRouter=require('./routes/report');
+const aboutRouter = require('./routes/about');
+
+const mongoose=require('mongoose');
+const Calories = require('./models/calories');
+const User = require('./models/users');
+
+const app = express();
+
+app.use(bodyParser.json());// Using bodyParser middleware to parse JSON request bodies
 
 const dbURL = 'mongodb+srv://kobi:admin@cluster0.nwoaaje.mongodb.net/caloriesProject?retryWrites=true&w=majority&appName=Cluster0';
-mongoose.set('strictQuery', true);
-mongoose.connect(dbURL)
+mongoose.set('strictQuery', true); // Setting Mongoose option for strict mode on queries
+
+mongoose.connect(dbURL)// Connecting to MongoDB Atlas cluster
     .then(() => {
       console.log('MongoDB Connected!');
     })
@@ -41,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/addcalories',addcaloriesRouter);
+app.use('/addcalories',addCaloriesRouter);
 app.use('/report',reportRouter);
 app.use('/about',aboutRouter);
 
